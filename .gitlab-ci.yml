@@ -15,7 +15,7 @@ deploy-docker:
     - docker rmi jarvis
   script:
     - docker build src/ -f src/Dockerfile -t jarvis --build-arg BOT_TOKEN=$BOT_TOKEN
-    - docker run jarvis --restart=always
+    - docker run -d jarvis --restart=always
   tags:
     - deploy
     - staging
