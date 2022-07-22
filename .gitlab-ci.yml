@@ -14,8 +14,9 @@ deploy-docker:
 #    - docker rm $(docker ps -aq -f ancestor=jarvis)
 #    - docker rmi jarvis
   script:
+    - ls
+    - ls /src
     - docker build src/ -f src/Dockerfile -t jarvis --build-arg BOT_TOKEN=$BOT_TOKEN
-  after_script:
     - docker run jarvis
   tags:
     - deploy

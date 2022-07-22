@@ -1,8 +1,9 @@
 from core.config import app_config
 
 from pathlib import Path
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, executor
 from aiogram.types import ContentType, File, Message
+import speech_recognition
 
 from speechkit.google import GoogleAPI
 
@@ -14,8 +15,10 @@ async def handle_file(file: File, file_name: str, path: str):
     Path(f"{path}").mkdir(parents=True, exist_ok=True)
 
     await bot.download_file(file_path=file.file_path, destination=f"{path}/{file_name}")
-
-    return GoogleAPI.recognize(f"{path}/{file_name}")
+    try:
+        return GoogleAPI.recognize(f"{path}/{file_name}")
+    except speech_recognition.UnknownValueError:
+        return "[ДАННЫЕ УДАЛЕНЫ]"
 
 
 @dp.message_handler(content_types=[ContentType.VOICE])
