@@ -9,13 +9,13 @@ stages:
 deploy-docker:
   stage: deploy
   image: tiangolo/docker-with-compose
-#  before_script:
-#    - docker stop $(docker ps -aq -f ancestor=jarvis)
-#    - docker rm $(docker ps -aq -f ancestor=jarvis)
-#    - docker rmi jarvis
+  before_script:
+    - docker stop $(docker ps -aq -f ancestor=jarvis)
+    - docker rm $(docker ps -aq -f ancestor=jarvis)
+    - docker rmi jarvis
   script:
     - docker build src/ -f src/Dockerfile -t jarvis --build-arg BOT_TOKEN=$BOT_TOKEN
-    - docker run jarvis
+    - docker run jarvis --restart=always
   tags:
     - deploy
     - staging
