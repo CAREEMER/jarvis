@@ -10,7 +10,7 @@ RUN apt update \
   && pip install poetry==1.1.6 \
   && apt install ffmpeg flac -y
 
-COPY pyproject.toml poetry.lock ./
+COPY src/pyproject.toml src/poetry.lock .
 
 RUN poetry config virtualenvs.create false \
   && poetry install --no-dev --no-interaction --no-ansi
@@ -19,6 +19,6 @@ ARG BOT_TOKEN
 
 ENV BOT_TOKEN="${BOT_TOKEN}"
 
-COPY . .
+COPY ./src .
 
 ENTRYPOINT ["python", "main.py"]
